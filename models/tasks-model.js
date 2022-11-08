@@ -1,6 +1,5 @@
 import mongoose from 'mongoose';
 const { Schema } = mongoose;
-
 const tasksSchema = new Schema({
     task_id: {
         type: String,
@@ -25,10 +24,6 @@ const tasksSchema = new Schema({
         default: 'high',
         required: 'priority is required'
     }
-
 });
-
-
 const Task = mongoose.model('Task', tasksSchema);
-
 export default Task;

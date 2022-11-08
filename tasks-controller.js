@@ -1,22 +1,22 @@
+import { query } from 'express';
+import { model } from 'mongoose';
 import Task from './models/tasks-model.js';
 import Tasks from './models/tasks-model.js';
 
 const create = async (req, res) => {
     const task = new Tasks(req.body);
     try {
-        await task.save();
+         task.save();
         return res.status(200).json({
           message: "Successfully task added"
         });
     }
-
     catch(e){
         return res.status(400).json({
             error: 'Error while saving task'
         });
-    }
+  } 
 }
-
 const removeAll = async (req, res) => {
     try {
         await Tasks.deleteMany();
@@ -30,20 +30,33 @@ const removeAll = async (req, res) => {
         });        
     }
 }
-
 const queryTask = async (req, res) => {
     try {
         let qp = req.query;
         let p = req.params;
-        let doc = await Tasks.find({"priority": qp.priority, "category": p.category})
+    
+        let param = {};
+        console.log("qp ", qp.priority);
+        if(qp.priority != undefined && qp.priority != "") {
+            param.priority = qp.priority;
+           
+        }
+
+        if(qp.description != undefined && qp.description != "") {
+            param.description = qp.description;
+        }
+        console.log("param ", param);
+        let doc = await Tasks.find(param)
         return res.status(200).json(doc);
-        
-    } catch (error) {
+    }
+     
+    catch (error) {
         return res.status(400).json({
-            error: 'Error while quering  task'
+            error: ' Some Error is there'
         });           
     }
 }
+
 
 const taskByID = async (req, res) => {
 

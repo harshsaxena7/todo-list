@@ -13,5 +13,5 @@ app.listen(8080, (err) => {
   if (err) {
     console.log(err)
   }
-  console.info('Server started on port %s.', 8080)
+  console.info('Server started on port')
 })
